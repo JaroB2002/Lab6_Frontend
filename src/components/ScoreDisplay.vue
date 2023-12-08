@@ -53,15 +53,23 @@
   <style scoped>
   /* Stijlen voor de volledige component */
   .scoredisplay-container {
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   }
   
   .scoredisplay-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     text-align: center;
-    color: #333;
+    color: #343a40;
     margin-bottom: 20px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 2px;
   }
   
   .scoredisplay-list {
@@ -70,29 +78,61 @@
   }
   
   .scoredisplay-item {
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #d6d8db;
+    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    transition: background-color 0.3s ease-in-out;
+    background-color: #fff;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
   .scoredisplay-item:hover {
-    background-color: #e0e0e0;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .rider-name {
+    font-size: 1.3rem;
+    color: #343a40;
+    font-weight: bold;
+  }
+  
+  .rider-score {
+    color: #007bff;
+    font-size: 1.5rem;
+    font-weight: bold;
   }
   
   .team-name {
     font-weight: bold;
     margin-right: 8px;
+    color: #343a40;
   }
   
   .team-score {
-    color: #007bff;
-    font-size: 1.2rem;
+    color: #28a745;
+    font-size: 1.3rem;
+    font-weight: bold;
   }
-  </style>
-  
+
+  /* Voeg een subtiele animatie toe aan de scoreboard items */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .scoredisplay-list li {
+    animation: fadeInUp 0.5s ease-out;
+  }
+</style>
+
