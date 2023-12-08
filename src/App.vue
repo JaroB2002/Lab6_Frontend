@@ -1,30 +1,38 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+// Hier kunnen eventuele imports en andere configuraties komen
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="app-container">
+    <router-link to="/" class="nav-link">Display score</router-link>
+    <router-link to="/updatestats" class="nav-link">Update Stats</router-link>
+    <router-view></router-view>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* Voeg stijlen toe aan je component */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.nav-link {
+  margin: 10px;
+  padding: 10px;
+  text-decoration: none;
+  color: #3498db;
+  font-weight: bold;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.nav-link:hover {
+  background-color: #3498db;
+  color: white;
 }
 </style>
