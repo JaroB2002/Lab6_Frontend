@@ -1,18 +1,32 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
-const riders = ref(["Wout Van Aert", "Mathieu Van Der Poel", "Tom Pidcock"]);
+const riders = ref([
+  "Wout Van Aert", "Mathieu Van Der Poel", "Tom Pidcock", "Eli Iserbyt",
+  "Laurens Sweeck", "Michael Vanthourenhout", "Toon Aerts", "Quinten Hermans",
+  "Lars Van Der Haar", "Corné Van Kessel"
+]);
 const selectedTeam = ref(null);
 const score = ref(null);
 
+let socket = null;
+
+onMounted(() => {
+  socket = new WebSocket('wss://lab6-backend-3m8h.onrender.com/primus');
+});
+
 const updateStats = () => {
-  // Implement your logic for updating stats here (since there's no backend or socket)
-  console.log("Updating stats:", selectedTeam.value, score.value);
+  const message = {
+    "action": "updateStats",
+    "rider": selectedTeam.value,
+    "score": score.value
+  };0
+  socket.send(JSON.stringify(message));
 };
 </script>
 
 <template>
-  <div>
+  <div class="update-stats-container">
     <h1>Update Statistics</h1>
     <label for="teamSelect">Select Rider:</label>
     <select v-model="selectedTeam" id="teamSelect">
@@ -23,54 +37,46 @@ const updateStats = () => {
     <button @click="updateStats">Update</button>
   </div>
 </template>
-let quizSocket = null;
 
-const initializeWebSocket = () => {
-  console.log('WebSocket initializing...');
-  quizSocket = new WebSocket('ws://localhost:3000/primus');
-  
-  quizSocket.onmessage = handleWebSocketMessage;
-};
+<style scoped>
+/* Stijlen voor de volledige component */
+.update-stats-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
 
-const handleWebSocketMessage = (event) => {
-  console.log('WebSocket message received:', event.data);
-  const newData = JSON.parse(event.data);
-  
-  if (newData.action === 'updateStats') {
-    updateTeamStats(newData.team, newData.score);
-  }
-};
+h1 {
+  color: #3498db;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
 
-const updateTeamStats = (teamName, newScore) => {
-  const teamToUpdate = teams.value.find((team) => team.name === teamName);
-  
-  if (teamToUpdate) {
-    teamToUpdate.score = newScore;
-    console.log('Team stats updated:', teamToUpdate);
-  }
-};
+label {
+  display: block;
+  margin-top: 15px;
+  color: #3498db;
+  font-weight: bold;
+}
 
-const onMountedHandler = () => {
-  console.log('Component mounted');
-  initializeWebSocket();
-};
+select, input {
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+}
 
-const updateStatistics = () => {
-  const message = {
-    action: 'updateStats',
-    team: selectedTeam.value,
-    score: score.value,
-  };
+button {
+  background-color: #2ecc71;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-  // Send message to WebSocket server
-  if (quizSocket && quizSocket.readyState === WebSocket.OPEN) {
-    quizSocket.send(JSON.stringify(message));
-    console.log('Message sent:', message);
-  }
-
-  // Reset input values
-  selectedTeam.value = '';
-  score.value = 0;
-};
-
-onMounted(onMountedHandler);
+button:hover {
+  background-color: #27ae60;
+}
+</style>

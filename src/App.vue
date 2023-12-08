@@ -4,7 +4,7 @@
 
 <template>
   <div class="app-container">
-    <router-link to="/" class="nav-link">Display score</router-link>
+    <router-link to="/" class="nav-link">Scoreboard</router-link>
     <router-link to="/updatestats" class="nav-link">Update Stats</router-link>
     <router-view></router-view>
   </div>
