@@ -23,20 +23,27 @@
   let socket = null;
   
   onMounted(() => {
-    socket = new WebSocket('wss://lab6-backend-3m8h.onrender.com/primus');
-    // Luister naar nieuwe gegevens
-    socket.onmessage = function (event) {
-      const message = JSON.parse(event.data);
-      console.log(message);
-      if (message.action === 'updateStats') {
+  socket = new WebSocket('wss://lab6-backend-3m8h.onrender.com/primus');
+  // Luister naar nieuwe gegevens
+  socket.onmessage = function (event) {
+    const message = JSON.parse(event.data);
+    console.log(message);
+    if (message.action === 'updateStats') {
+      const existingRider = data.value.find(item => item.rider === message.rider);
+      if (existingRider) {
+        // If the rider already exists, update the score
+        existingRider.score = message.score;
+      } else {
+        // If the rider doesn't exist, add a new entry
         data.value.push({
           "rider": message.rider,
           "score": message.score
         });
-        sortData();
       }
-    };
-  });
+      sortData();
+    }
+  };
+});
   
   const sortedData = ref([]);
   
@@ -135,4 +142,3 @@
     animation: fadeInUp 0.5s ease-out;
   }
 </style>
-
